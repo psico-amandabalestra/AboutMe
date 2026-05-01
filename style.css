@@ -1042,14 +1042,14 @@ button {
 #calendly-widget {
   width: 100%;
   min-width: 0;
-  height: 750px;  /* altura generosa; JS ajusta via postMessage */
+  height: 800px;
 }
 
 /* iframe do Calendly */
 .modal__calendar iframe {
   width: 100% !important;
   min-width: 0 !important;
-  height: 750px;  /* altura generosa; JS ajusta via postMessage */
+  height: 800px;
   border: none;
   display: block;
 }
@@ -1189,39 +1189,7 @@ button {
     gap: var(--space-lg);
   }
 
-  /* Modal em mobile — ocupa quase a tela toda */
-  .modal-overlay {
-    padding: 0;
-    align-items: flex-end;
-  }
-  .modal {
-    max-height: 98vh;
-    height: 98vh;
-    border-radius: var(--radius-md) var(--radius-md) 0 0;
-    margin: 0;
-    width: 100%;
-  }
-  .modal__body {
-    padding: 0.5rem var(--space-sm) var(--space-sm);
-  }
-  /* Esconde título e descrição em mobile — o Calendly já mostra o nome */
-  .modal__title,
-  .modal__desc {
-    display: none;
-  }
-  .modal__calendar {
-    min-height: 0;
-    /* Deixa crescer para preencher o espaço disponível */
-    flex: 1;
-    margin-bottom: var(--space-sm);
-  }
-  /* Altura inicial generosa; JS ajusta via postMessage */
-  #calendly-widget {
-    height: 700px;
-  }
-  .modal__calendar iframe {
-    height: 700px;
-  }
+  /* Modal não é usado em mobile (Calendly abre em nova aba via JS) */
 }
 
 /* ----- MOBILE PEQUENO (≤ 480px) ----- */
@@ -1242,11 +1210,5 @@ button {
 
   .contato__form-wrap { padding: var(--space-md); }
 
-  #calendly-widget {
-    height: 680px;
-  }
-
-  .modal__calendar iframe {
-    height: 680px;
-  }
+  /* Calendly abre em nova aba em mobile — sem overrides necessários */
 }

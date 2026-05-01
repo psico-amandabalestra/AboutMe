@@ -118,6 +118,12 @@ function initModalListeners() {
 }
 
 function abrirAgendamento() {
+  // Em mobile: abre o Calendly diretamente em nova aba (mais confiável no iOS/Android)
+  if (window.innerWidth <= 768) {
+    window.open(CONFIG.CALENDLY_URL, '_blank', 'noopener');
+    return;
+  }
+  // Desktop: abre o modal normalmente
   const overlay = document.getElementById('modalAgendamento');
   overlay.classList.add('open');
   document.body.style.overflow = 'hidden';
