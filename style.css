@@ -415,8 +415,8 @@ button {
 }
 
 .hero__card--accent {
-  background: var(--color-sage-light);
-  border-color: transparent;
+  background: var(--color-white);
+  border-color: var(--color-border);
 }
 
 /* ============================================================
