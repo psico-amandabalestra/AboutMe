@@ -144,28 +144,51 @@ function fecharAgendamento() {
 
 let calendarioCarregado = false;
 
-/* Ajusta a altura do iframe do Calendly dinamicamente via postMessage.
-   O Calendly envia eventos com a altura real do conteúdo. */
+/* Ajusta a altura do iframe do Calendly dinamicamente.
+   Estratégia dupla: postMessage (quando disponível) + polling do scrollHeight. */
 function initCalendlyResizer() {
+  // 1) postMessage — Calendly envia altura em alguns eventos
   window.addEventListener('message', (e) => {
     if (e.origin !== 'https://calendly.com') return;
     const data = e.data;
     if (data && data.event && data.event.indexOf('calendly') === 0) {
-      // Pega o iframe dentro do widget
-      const widget = document.getElementById('calendly-widget');
-      if (!widget) return;
-      const iframe = widget.querySelector('iframe');
-      if (!iframe) return;
-
-      // calendly.event_type_viewed e outros eventos trazem payload.height
       const height = data.payload && data.payload.height;
-      if (height && height > 300) {
-        iframe.style.height = height + 'px';
-        widget.style.height  = height + 'px';
-        document.getElementById('calendarContainer').style.minHeight = height + 'px';
+      if (height && height > 400) {
+        aplicarAlturaCalendly(height);
       }
     }
   });
+
+  // 2) Polling — lê o scrollHeight real do iframe a cada 500ms por 10s
+  // Cobre os casos em que o Calendly não envia payload.height
+  let tentativas = 0;
+  const poll = setInterval(() => {
+    tentativas++;
+    if (tentativas > 20) { clearInterval(poll); return; }
+
+    const widget = document.getElementById('calendly-widget');
+    if (!widget) return;
+    const iframe = widget.querySelector('iframe');
+    if (!iframe) return;
+
+    try {
+      // scrollHeight só funciona se same-origin, mas tenta mesmo assim
+      const h = iframe.contentWindow?.document?.body?.scrollHeight;
+      if (h && h > 400) { aplicarAlturaCalendly(h); clearInterval(poll); }
+    } catch(_) {
+      // cross-origin: ignora, postMessage vai cuidar
+    }
+  }, 500);
+}
+
+function aplicarAlturaCalendly(height) {
+  const widget = document.getElementById('calendly-widget');
+  if (!widget) return;
+  const iframe = widget.querySelector('iframe');
+  if (iframe) iframe.style.height = height + 'px';
+  widget.style.height = height + 'px';
+  const container = document.getElementById('calendarContainer');
+  if (container) container.style.minHeight = height + 'px';
 }
 
 function carregarCalendario() {
