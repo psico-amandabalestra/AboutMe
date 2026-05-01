@@ -20,7 +20,7 @@
 const CONFIG = {
   // --- CALENDLY ---
   // Cole aqui a URL do seu Calendly (ex: https://calendly.com/seu-usuario/30min)
-    CALENDLY_URL: 'https://calendly.com/psicologa-amandabalestra/consulta-amanda-balestra',
+    CALENDLY_URL: 'https://calendly.com/psicologa-amandabalestra/consulta-amanda-balestra?locale=pt',
 
   // --- WHATSAPP ---
   WHATSAPP_NUMBER: '5512988945587',
