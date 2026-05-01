@@ -144,6 +144,30 @@ function fecharAgendamento() {
 
 let calendarioCarregado = false;
 
+/* Ajusta a altura do iframe do Calendly dinamicamente via postMessage.
+   O Calendly envia eventos com a altura real do conteúdo. */
+function initCalendlyResizer() {
+  window.addEventListener('message', (e) => {
+    if (e.origin !== 'https://calendly.com') return;
+    const data = e.data;
+    if (data && data.event && data.event.indexOf('calendly') === 0) {
+      // Pega o iframe dentro do widget
+      const widget = document.getElementById('calendly-widget');
+      if (!widget) return;
+      const iframe = widget.querySelector('iframe');
+      if (!iframe) return;
+
+      // calendly.event_type_viewed e outros eventos trazem payload.height
+      const height = data.payload && data.payload.height;
+      if (height && height > 300) {
+        iframe.style.height = height + 'px';
+        widget.style.height  = height + 'px';
+        document.getElementById('calendarContainer').style.minHeight = height + 'px';
+      }
+    }
+  });
+}
+
 function carregarCalendario() {
   if (calendarioCarregado) return;
   calendarioCarregado = true;
@@ -171,6 +195,8 @@ function carregarCalendario() {
       prefill: {},
       utm: {}
     });
+    // Inicia o listener de resize após criar o widget
+    initCalendlyResizer();
   }
 
   // Se o objeto Calendly já está disponível na página, inicializa direto
