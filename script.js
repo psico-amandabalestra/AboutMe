@@ -20,7 +20,7 @@
 const CONFIG = {
   // --- CALENDLY ---
   // Cole aqui a URL do seu Calendly (ex: https://calendly.com/seu-usuario/30min)
-    CALENDLY_URL: 'https://calendly.com/psico-amandabalestra/amanda-balestra-consulta',
+    CALENDLY_URL: 'https://calendly.com/psicologa-amandabalestra/consulta-amanda-balestra',
 
   // --- WHATSAPP ---
   WHATSAPP_NUMBER: '5512988945587',
@@ -239,11 +239,11 @@ async function enviarMensagem() {
     const corpo   = encodeURIComponent(
       `Nome: ${nome}\nE-mail: ${email}\nTelefone: ${telefone}\n\nMensagem:\n${mensagem}`
     );
-    window.location.href = `mailto:psico.amandabalestra@outlook.com.br?subject=${assunto}&body=${corpo}`;
+    window.location.href = `mailto:psicologa.amandabalestra@gmail.com?subject=${assunto}&body=${corpo}`;
 
     mostrarFeedback(
       feedback, 'success',
-      '✅ Abrindo seu aplicativo de e-mail... Se não abriu, envie diretamente para psico.amandabalestra@outlook.com.br'
+      '✅ Abrindo seu aplicativo de e-mail... Se não abriu, envie diretamente para psicologa.amandabalestra@gmail.com'
     );
     btn.disabled = false;
     btn.textContent = 'Enviar Mensagem';
