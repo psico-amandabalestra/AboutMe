@@ -1189,7 +1189,25 @@ button {
     gap: var(--space-lg);
   }
 
-  /* Modal não é usado em mobile (Calendly abre em nova aba via JS) */
+  /* Modal responsivo para mobile */
+  .modal-overlay {
+    padding: 0;
+    align-items: flex-end;    /* modal sobe como bottom sheet */
+  }
+
+  .modal {
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    max-height: 92vh;
+  }
+
+  .modal__body {
+    padding: var(--space-md) var(--space-md) var(--space-xl);
+  }
+
+  #calendly-widget,
+  .modal__calendar iframe {
+    height: 600px;
+  }
 }
 
 /* ----- MOBILE PEQUENO (≤ 480px) ----- */
@@ -1210,5 +1228,8 @@ button {
 
   .contato__form-wrap { padding: var(--space-md); }
 
-  /* Calendly abre em nova aba em mobile — sem overrides necessários */
+  #calendly-widget,
+  .modal__calendar iframe {
+    height: 520px;
+  }
 }
